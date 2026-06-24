@@ -27,7 +27,22 @@
         return this.hp !== 0;
     }
 
-    Character.prototype.gainXp = function(amount){
+    Character.prototype.attack = function (target, callback){
+        target.takeDamage(this.attackPower);
+        
+        let result = {
+            attacker: this.name,
+            target: target.name,
+            damage: this.attackPower,
+            targetAlive: target.isAlive()
+        };
+
+        if(typeof callback === 'function'){
+            callback(result);
+        }
+    }
+
+    Character.prototype.gainXp = function(amount, onEvolve){
         this.gatheredXp += amount;
         this.totalXp += amount;
         let addToLevel = Math.floor(this.gatheredXp/this.baseXp);
@@ -35,7 +50,7 @@
 
         if((this.level + addToLevel) >= 5){
             this.level = 1;
-            //ToDo: evolve
+            if(typeof onEvolve === 'function') onEvolve(this);
         }else{
             this.level += addToLevel;
         }

@@ -1,5 +1,6 @@
 function Warrior(name){
     Character.call(this, name);
+    console.log("Warrior: " + name + " was born");
     
     let rage = 0;
 
@@ -8,7 +9,7 @@ function Warrior(name){
     this.totalXp = this.baseXp;
 
     this.getRage = function(){return rage;}
-    this.addRage = function(){rage++;}
+    this.addRage = function(){rage += 3;}
 }
 
 Warrior.prototype = Object.create(Character.prototype);
@@ -21,16 +22,7 @@ Warrior.prototype.takeDamage = function(amount){
 }
 
 Warrior.prototype.attack = function (target, callback){
-    target.takeDamage(this.attackPower);
-    
-    let result = {
-        attacker: this.name,
-        target: target.name,
-        damage: this.attackPower,
-        targetAlive: target.isAlive()
-    };
-
-    if(typeof callback === 'function'){
-        callback(result);
-    }
+    let rageBoost = Math.floor(this.getRage()/15);
+    target.takeDamage(rageBoost);
+    Character.prototype.attack.call(this,target,callback);
 }

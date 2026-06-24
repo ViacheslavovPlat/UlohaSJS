@@ -1,6 +1,7 @@
 function Paladin(name){
     Warrior.call(this, name);
-
+    console.log("Paladin: " + name + " was born");
+    
     this.mana = 30;
     this.attackPower = 15; 
     this.baseXp = 15;
