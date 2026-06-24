@@ -97,6 +97,8 @@ BattleField.prototype.resolveBattle = function(char, targ, factory){
     this.lockCell(char.position);
     this.lockCell(targ.position);
     
+    console.log(char.name +" engages " +targ.name);
+
     let isCharFirst = char.totalXp >= targ.totalXp;
     let grid = this.getGrid();
 
@@ -123,6 +125,9 @@ BattleField.prototype.resolveBattle = function(char, targ, factory){
         loser = char;
     }
 
+    console.log(loser.name +" has fallen");
+    console.log(winner.name + " defeated " + loser.name);
+    
     let self = this;
     winner.gainXp(loser.gatheredXp, function(character){
         let evolved = factory.eveolve(character);
@@ -131,6 +136,8 @@ BattleField.prototype.resolveBattle = function(char, targ, factory){
         let [ex, ey] = self.parsePos(character.position);
         self.getGrid()[ey][ex] = evolved;
     });
+
+    console.log(winner.name + " gained " + loser.gatheredXp +" XP");
 
     let [winnerX, winnerY] = this.parsePos(winner.position);
     let [loserX, loserY] = this.parsePos(loser.position);

@@ -18,5 +18,6 @@ CharacterFactory.prototype.evolve = function(character){
         evolved = new Warrior(character.name);
     }
     evolved.position = character.position;
+    console.log(this.name + " evolved from Warrior to Paladin");
     return evolved;
 }
